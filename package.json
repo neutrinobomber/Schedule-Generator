@@ -1,6 +1,11 @@
 {
-  "name": "ScheduleGenerator",
+  "name": "schedule",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^4.6.1",
+    "eslint-config-google": "^0.9.1"
+  }
 }
