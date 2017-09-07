@@ -29,10 +29,19 @@ const others = [
 // console.log(testRoom1);
 // console.log(testRoom2);
 
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
-}
+// function getRandomInt(min, max) {
+//     min = Math.ceil(min);
+//     max = Math.floor(max);
+//     return Math.floor(Math.random() * (max - min)) + min;
+// }
 
-console.log(getRandomInt(0, 15));
+// console.log(getRandomInt(0, 15));
+
+const testMap = new Map();
+testMap.set('shit', 'fushkii');
+testMap.set('guzare', 'govna');
+const it = testMap[Symbol.iterator]();
+let val1 = it.next().value;
+val1 = it.next().value;
+
+console.log(val1)
