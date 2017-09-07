@@ -15,7 +15,7 @@ class CourseClass { // tova e chas/urok
         }
     }
 
-    groupsOverlaps(otherCourseClass) {
+    groupsOverlap(otherCourseClass) {
         for (let group of this.groups) {
             for (let otherGroup of otherCourseClass.groups) {
                 if (group === otherGroup) {
@@ -28,12 +28,8 @@ class CourseClass { // tova e chas/urok
     }
 
     professorOverlaps(otherCourseClass) {
-        if (this.professor === otherCourseClass.professor) {
-            return true;
-        }
-
-        return false;
+        return this.professor === otherCourseClass.professor;
     }
 }
 
-module.exports = { CourseClass }
+module.exports = { CourseClass };
