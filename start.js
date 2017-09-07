@@ -40,8 +40,9 @@ const others = [
 const testMap = new Map();
 testMap.set('shit', 'fushkii');
 testMap.set('guzare', 'govna');
-const it = testMap[Symbol.iterator]();
+const it = testMap.entries();
 let val1 = it.next().value;
-val1 = it.next().value;
+it.next();
+
 
 console.log(val1)

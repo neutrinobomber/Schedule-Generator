@@ -16,8 +16,8 @@ class Schedule {
         crossoverProbability,
         mutationProbability) {
         if (arguments.length === 2) {
-            otherSchedule = arguments[0];
-            setupOnly = arguments[1];
+            let otherSchedule = arguments[0];
+            let setupOnly = arguments[1];
 
             if (!setupOnly) {
                 this.slots = otherSchedule.slots;
@@ -38,7 +38,7 @@ class Schedule {
             this.fitness = 0;
             this.criteria = [];
             this.slots = [[]];
-            this.classes = [];
+            this.classes = new Map();
         }
     }
 
@@ -47,7 +47,6 @@ class Schedule {
     }
 
     makeNewFromPrototype() {
-        let size = this.slots.length;
         let newChromozome = new Schedule(this, true);
         let c = Configuration.getCourseClasses();
 
@@ -90,8 +89,8 @@ class Schedule {
             }
         }
 
-        let it1 = this.classes[Symbol.iterator]();
-        let it2 = parent2.classes[Symbol.iterator]()
+        let it1 = this.classes.entries();
+        let it2 = parent2.classes.entries();
         let val1 = it1.next().value;
         let val2 = it2.next().value;
 
@@ -124,6 +123,129 @@ class Schedule {
     }
 
     mutation() {
+        if(getRandomInt(0, 100) > this.mutationProbability) {
+            return;
+        }
+
+        let numberOfClasses = this.classes.length;
+
+        for(let i = this.mutationSize; i > 0; i--) {
+            let mpos = getRandomInt(0, numberOfClasses);
+            let pos1 = 0;
+            let it = this.classes.entries();
+            let val = it.next().value;
+
+            for(; mpos > 0; val = it.next().value, mpos--) { }
+
+            pos1 = val[1];
+            let cc1 = val[0];
+            let nr = Configuration.getNumberOfRooms();
+            let dur = cc1.duration;
+            let day = getRandomInt(0, DAYS_NUM);
+            let room = getRandomInt(0, nr);
+            let time = getRandomInt(0, DAY_HOURS + 1 - dur);
+            let pos2 = day * nr * DAY_HOURS + room * DAY_HOURS + time;
+
+            for(let j = dur - 1; j >= 0; j--) {
+                let cl = this.slots[pos1 + j];
+
+                for(let courseClass of cl) {
+                    if(courseClass === cc1) {
+                        let index = cl.indexOf(courseClass);
+                        if (index > -1) {
+                            cl.splice(index, 1);
+                        }
+                        break;
+                    }
+                }
+
+                this.slots[pos2 + i].push(cc1);
+            }
+
+            // needs checking
+            this.classes[cc1] = pos2;
+        }
+
+        this.calculateFitness();
+    }
+
+    calculateFitness() {
+        let score = 0;
+        let numberOfRooms = Configuration.getNumberOfRooms();
+        let daySize = DAY_HOURS * numberOfRooms;
+        let ci = 0;
+
+        for(let [key, value] of this.classes.entries()) {
+            let p = value;
+            let day = p / daySize;
+            let time = p % daySize;
+            let room = time / DAY_HOURS;
+            time = time % DAY_HOURS;
+            let dur = key.duration;
+
+            let ro = false;
+            for(let i = dur - 1; i >= 0; i--) {
+                if(this.slots[p + 1].length > 1) {
+                    ro = true;
+                    break;
+                }
+            }
+
+            if(!ro) {
+                score = score + 1;
+            }
+
+            this.criteria[ci] = !ro;
+
+            let cc = key;
+            let r = Configuration.getRoomByID(room);
+
+            this.criteria[ci + 1] = r.numberOfSeats >= cc.numberOfSeats;
+            if(this.criteria[ci + 1]) {
+                score = score + 1;
+            }
+
+            this.criteria[ci + 2] = !cc.requiresLab || (cc.requiresLab && r.isLab);
+            if(this.criteria[ci + 2]) {
+                score = score + 1
+            }
+
+            let po = false;
+            let go = false;
+            for(let i = numberOfRooms, t = day * daySize + time; i > 0; i--, t += DAY_HOURS) {
+                for(let j = dur - 1; j >= 0; j--) {
+                    let cl = this.slots[t + j];
+
+                    for(let courseClass of cl) {
+                        if(cc !== courseClass) {
+                            if(!po && cc.professorOverlaps(courseClass)) {
+                                po = true;
+                            }
+
+                            if(!go && cc.groupsOverlap(courseClass)) {
+                                go = true;
+                            }
+
+                            if(po && go) {
+                                if(!po) {
+                                    score = score + 1;
+                                }
+                                this.criteria[ci + 3] = !po;
+
+                                if(!go) {
+                                    score = score + 1;
+                                }
+                                this.criteria[ci + 4] = !go;
+                            }
+
+                            this.fitness = score / (Configuration.getNumberOfCourseClasses() * DAYS_NUM);
+                        }
+                    }
+                }
+            }
+
+            ci += 5;
+        }
 
     }
 }
