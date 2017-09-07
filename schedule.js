@@ -90,11 +90,40 @@ class Schedule {
             }
         }
 
+        let it1 = this.classes[Symbol.iterator]();
+        let it2 = parent2.classes[Symbol.iterator]()
+        let val1 = it1.next().value;
+        let val2 = it2.next().value;
+
         let first = getRandomInt(0, 2) === 0;
         for(let i = 0; i < size; i++) {
             if (first) {
-                n.classes.set()
+                n.classes.set(val1[0], val1[1]);
+
+                for(let j = val1[0].duration - 1; j >= 0; j--) {
+                    n.slots[val1[1] + j].push(val1[0]);
+                }
+            } else {
+                n.classes.set(val2[0], val2[1]);
+
+                for(let j = val2[0].duration - 1; j >= 0; j--) {
+                    n.slots[val2[1] + j].push(val2[0]);
+                }
             }
+
+            if(cp[i]) {
+                first = !first;
+            }
+
+            val1 = it1.next().value;
+            val2 = it2.next().value;
         }
+
+        n.calculateFitness();
+        return n;
+    }
+
+    mutation() {
+
     }
 }
