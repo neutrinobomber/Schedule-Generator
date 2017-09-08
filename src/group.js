@@ -1,8 +1,8 @@
 class Group {
-    constructor(groupId, groupSize, moduleIds) {
+    constructor(groupId, groupSize, subjectIds) {
         this._groupId = groupId;
         this._groupSize = groupSize;
-        this._moduleIds = moduleIds;
+        this._subjectIds = subjectIds;
     }
 
     getGroupId() {
@@ -13,8 +13,8 @@ class Group {
         return this._groupSize;
     }
 
-    getModuleIds() {
-        return this._moduleIds;
+    getSubjectIds() {
+        return this._subjectIds;
     }
 }
 

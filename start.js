@@ -24,7 +24,7 @@ class TimetableGA {
             generation++;
         }
 
-        timetable.createClasses(population.getFittest(0));
+        timetable.createLessons(population.getFittest(0));
         console.log();
         console.log('Solution found in ' + generation + ' generations');
         console.log('Final solution fitness: ' + population
@@ -33,32 +33,32 @@ class TimetableGA {
         console.log('Clashes: ' + timetable.calcClashes());
 
         console.log();
-        const classes = timetable.getClasses();
-        let classIndex = 1;
-        for (const bestClass of classes) {
-            console.log('Class ' + classIndex + ':');
-            console.log('Module: ' +
+        const lessons = timetable.getLessons();
+        let lessonIndex = 1;
+        for (const bestLesson of lessons) {
+            console.log('Lesson ' + lessonIndex + ':');
+            console.log('Subject: ' +
                 timetable
-                    .getModuleById(bestClass.getModuleId())
-                    .getModuleName());
+                    .getSubjectById(bestLesson.getSubjectId())
+                    .getSubjectName());
             console.log('Group: ' +
                 timetable
-                    .getGroupById(bestClass.getGroupId())
+                    .getGroupById(bestLesson.getGroupId())
                     .getGroupId());
             console.log('Room: ' +
                 timetable
-                    .getRoomById(bestClass.getRoomId())
+                    .getRoomById(bestLesson.getRoomId())
                     .getRoomNumber());
-            console.log('Professor: ' +
+            console.log('Teacher: ' +
                 timetable
-                    .getProfessorById(bestClass.getProfessorId())
-                    .getProfessorName());
+                    .getTeacherById(bestLesson.getTeacherId())
+                    .getTeacherName());
             console.log('Time: ' +
                 timetable
-                    .getTimeslotById(bestClass.getTimeslotId())
+                    .getTimeslotById(bestLesson.getTimeslotId())
                     .getTimeslot());
             console.log('-----');
-            classIndex++;
+            lessonIndex++;
         }
     }
 
@@ -86,17 +86,17 @@ class TimetableGA {
         timetable.addTimeslot(14, 'Fri 11:00 - 13:00');
         timetable.addTimeslot(15, 'Fri 13:00 - 15:00');
 
-        timetable.addProfessor(1, 'Dr P Smith');
-        timetable.addProfessor(2, 'Mrs E Mitchell');
-        timetable.addProfessor(3, 'Dr R Williams');
-        timetable.addProfessor(4, 'Mr A Thompson');
+        timetable.addTeacher(1, 'Dr P Smith');
+        timetable.addTeacher(2, 'Mrs E Mitchell');
+        timetable.addTeacher(3, 'Dr R Williams');
+        timetable.addTeacher(4, 'Mr A Thompson');
 
-        timetable.addModule(1, 'cs1', 'Computer Science', [1, 2]);
-        timetable.addModule(2, 'en1', 'English', [1, 3]);
-        timetable.addModule(3, 'ma1', 'Maths', [1, 2]);
-        timetable.addModule(4, 'ph1', 'Physics', [3, 4]);
-        timetable.addModule(5, 'hi1', 'History', [4]);
-        timetable.addModule(6, 'dr1', 'Drama', [1, 4]);
+        timetable.addSubject(1, 'cs1', 'Computer Science', [1, 2]);
+        timetable.addSubject(2, 'en1', 'English', [1, 3]);
+        timetable.addSubject(3, 'ma1', 'Maths', [1, 2]);
+        timetable.addSubject(4, 'ph1', 'Physics', [3, 4]);
+        timetable.addSubject(5, 'hi1', 'History', [4]);
+        timetable.addSubject(6, 'dr1', 'Drama', [1, 4]);
 
         timetable.addGroup(1, 10, [1, 3, 4]);
         timetable.addGroup(2, 30, [2, 3, 5, 6]);

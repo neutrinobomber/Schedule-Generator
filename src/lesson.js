@@ -1,15 +1,15 @@
-class Class {
-    constructor(classId, groupId, moduleId) {
-        this._classId = classId;
+class Lesson {
+    constructor(lessonId, groupId, subjectId) {
+        this._lessonId = lessonId;
         this._groupId = groupId;
-        this._moduleId = moduleId;
-        this._professorId = 0;
+        this._subjectId = subjectId;
+        this._teacherId = 0;
         this._timeslotId = 0;
         this._roomId = 0;
     }
 
-    addProfessor(professorId) {
-        this._professorId = professorId;
+    addTeacher(teacherId) {
+        this._teacherId = teacherId;
     }
 
     addTimeslot(timeslotId) {
@@ -20,20 +20,20 @@ class Class {
         this._roomId = roomId;
     }
 
-    getClassId() {
-        return this._classId;
+    getLessonId() {
+        return this._lessonId;
     }
 
     getGroupId() {
         return this._groupId;
     }
 
-    getModuleId() {
-        return this._moduleId;
+    getSubjectId() {
+        return this._subjectId;
     }
 
-    getProfessorId() {
-        return this._professorId;
+    getTeacherId() {
+        return this._teacherId;
     }
 
     getTimeslotId() {
@@ -45,4 +45,4 @@ class Class {
     }
 }
 
-module.exports = Class;
+module.exports = Lesson;

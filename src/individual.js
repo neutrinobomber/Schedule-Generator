@@ -19,7 +19,7 @@ class Individual {
         let chromosomeIndex = 0;
 
         for (const group of timetable.getGroupsAsArray()) {
-            for (const moduleId of group.getModuleIds()) {
+            for (const subjectId of group.getSubjectIds()) {
                 newChromosome[chromosomeIndex] = timetable
                     .getRandomTimeslot()
                     .getTimeslotId();
@@ -31,8 +31,8 @@ class Individual {
                 chromosomeIndex++;
 
                 newChromosome[chromosomeIndex] = timetable
-                    .getModuleById(moduleId)
-                    .getRandomProfessorId();
+                    .getSubjectById(subjectId)
+                    .getRandomTeacherId();
                 chromosomeIndex++;
             }
         }
