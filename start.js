@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
 
-const Timetable = require('./new/timetable');
-const GeneticAlgorithm = require('./new/genetic.algorithm');
+const Timetable = require('./src/timetable');
+const GeneticAlgorithm = require('./src/genetic.algorithm');
 
 class TimetableGA {
     static init() {
