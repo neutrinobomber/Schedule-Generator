@@ -30,8 +30,9 @@ class Individual {
                     .getRoomId();
                 chromosomeIndex++;
 
-                const module = timetable.getModuleById(moduleId);
-                newChromosome[chromosomeIndex] = module.getRandomProfessorId();
+                newChromosome[chromosomeIndex] = timetable
+                    .getModuleById(moduleId)
+                    .getRandomProfessorId();
                 chromosomeIndex++;
             }
         }

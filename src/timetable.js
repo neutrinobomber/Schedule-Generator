@@ -107,9 +107,6 @@ class Timetable {
     }
 
     getRoomById(roomId) {
-        if (!this._rooms.has(roomId)) {
-            console.log(`Room doesn't contrain key ${roomId}`);
-        }
         return this._rooms.get(roomId);
     }
 
@@ -120,7 +117,7 @@ class Timetable {
     getRandomRoom() {
         const roomsArray = Array.from(this._rooms.values());
         return roomsArray[
-            Math.floor(roomsArray.length * Math.random())];
+            Math.floor(Math.random() * roomsArray.length)];
     }
 
     getProfessorById(professorId) {
@@ -132,7 +129,7 @@ class Timetable {
     }
 
     getGroupModulesById(groupId) {
-        return this._groups.get(groupId);
+        return this._groups.get(groupId).getModules();
     }
 
     getGroupById(groupId) {
