@@ -119,9 +119,8 @@ class Timetable {
 
     getRandomRoom() {
         const roomsArray = Array.from(this._rooms.values());
-        const room = roomsArray[
+        return roomsArray[
             Math.floor(roomsArray.length * Math.random())];
-        return room;
     }
 
     getProfessorById(professorId) {
@@ -133,8 +132,7 @@ class Timetable {
     }
 
     getGroupModulesById(groupId) {
-        const group = this._groups.get(groupId);
-        return group.moduleIDs;
+        return this._groups.get(groupId);
     }
 
     getGroupById(groupId) {
@@ -151,9 +149,8 @@ class Timetable {
 
     getRandomTimeslot() {
         const timeslotArray = Array.from(this._timeslots.values());
-        const timeslot = timeslotArray[
+        return timeslotArray[
             Math.floor(Math.random() * timeslotArray.length)];
-        return timeslot;
     }
 
     getClasses() {
@@ -168,7 +165,7 @@ class Timetable {
         let numClasses = 0;
         const groups = Array.from(this._groups.values());
         for (const group of groups) {
-            numClasses += group.moduleIDs.length;
+            numClasses += group.getModuleIds().length;
         }
         this._numClasses = numClasses;
 

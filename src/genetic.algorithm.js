@@ -17,8 +17,7 @@ class GeneticAlgorithm {
     }
 
     initPopulation(timetable) {
-        const population = new Population(this._populationSize, timetable);
-        return population;
+        return new Population(this._populationSize, timetable);
     }
 
     isTerminationConditionMet(...params) {
