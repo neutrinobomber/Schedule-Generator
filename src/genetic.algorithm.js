@@ -33,7 +33,7 @@ class GeneticAlgorithm {
 
     calcFitness(individual, timetable) {
         const threadTimetable = new Timetable(timetable);
-        threadTimetable.createClasses(individual);
+        threadTimetable.createLessons(individual);
 
         const clashes = threadTimetable.calcClashes();
         const fitness = 1 / (clashes + 1);

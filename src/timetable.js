@@ -2,27 +2,27 @@
 /* eslint no-console: 0 */
 
 const Room = require('./room');
-const Professor = require('./professor');
-const Module = require('./module');
+const Teacher = require('./teacher');
+const Subject = require('./subject');
 const Group = require('./group');
 const Timeslot = require('./timeslot');
-const Class = require('./class');
+const Lesson = require('./lesson');
 
 class Timetable {
     constructor(cloneable) {
-        this._classes = [];
-        this._numClasses = 0;
+        this._lessons = [];
+        this._numLessons = 0;
 
         if (cloneable) {
             this._rooms = cloneable.getRooms();
-            this._professors = cloneable.getProfessors();
-            this._modules = cloneable.getModules();
+            this._teachers = cloneable.getTeachers();
+            this._subjects = cloneable.getSubjects();
             this._groups = cloneable.getGroups();
             this._timeslots = cloneable.getTimeslots();
         } else {
             this._rooms = new Map();
-            this._professors = new Map();
-            this._modules = new Map();
+            this._teachers = new Map();
+            this._subjects = new Map();
             this._groups = new Map();
             this._timeslots = new Map();
         }
@@ -36,12 +36,12 @@ class Timetable {
         return this._timeslots;
     }
 
-    getModules() {
-        return this._modules;
+    getSubjects() {
+        return this._subjects;
     }
 
-    getProfessors() {
-        return this._professors;
+    getTeachers() {
+        return this._teachers;
     }
 
     addRoom(roomId, roomNumber, capacity) {
@@ -50,23 +50,23 @@ class Timetable {
             new Room(roomId, roomNumber, capacity));
     }
 
-    addProfessor(professorId, professorName) {
-        this._professors.set(
-            professorId,
-            new Professor(professorId, professorName));
+    addTeacher(teacherId, teacherName) {
+        this._teachers.set(
+            teacherId,
+            new Teacher(teacherId, teacherName));
     }
 
-    addModule(moduleId, moduleCode, someModule, professorIds) {
-        this._modules.set(
-            moduleId,
-            new Module(moduleId, moduleCode, someModule, professorIds));
+    addSubject(subjectId, subjectCode, someSubject, teacherIds) {
+        this._subjects.set(
+            subjectId,
+            new Subject(subjectId, subjectCode, someSubject, teacherIds));
     }
 
-    addGroup(groupId, groupSize, moduleIds) {
+    addGroup(groupId, groupSize, subjectIds) {
         this._groups.set(
             groupId,
-            new Group(groupId, groupSize, moduleIds));
-        this._numClasses = 0;
+            new Group(groupId, groupSize, subjectIds));
+        this._numLessons = 0;
     }
 
     addTimeslot(timeslotId, timeslot) {
@@ -75,35 +75,35 @@ class Timetable {
             new Timeslot(timeslotId, timeslot));
     }
 
-    createClasses(individual) {
-        const classes = [];
+    createLessons(individual) {
+        const lessons = [];
         const chromosome = individual.getChromosome();
         let chromosomePos = 0;
-        let classIndex = 0;
+        let lessonIndex = 0;
 
         for (const group of this.getGroupsAsArray()) {
-            const moduleIds = group.getModuleIds();
+            const subjectIds = group.getSubjectIds();
 
-            for (const moduleId of moduleIds) {
-                classes[classIndex] = new Class(
-                    classIndex,
+            for (const subjectId of subjectIds) {
+                lessons[lessonIndex] = new Lesson(
+                    lessonIndex,
                     group.getGroupId(),
-                    moduleId);
+                    subjectId);
 
-                classes[classIndex].addTimeslot(chromosome[chromosomePos]);
+                lessons[lessonIndex].addTimeslot(chromosome[chromosomePos]);
                 chromosomePos++;
 
-                classes[classIndex].setRoomId(chromosome[chromosomePos]);
+                lessons[lessonIndex].setRoomId(chromosome[chromosomePos]);
                 chromosomePos++;
 
-                classes[classIndex].addProfessor(chromosome[chromosomePos]);
+                lessons[lessonIndex].addTeacher(chromosome[chromosomePos]);
                 chromosomePos++;
 
-                classIndex++;
+                lessonIndex++;
             }
         }
 
-        this._classes = classes;
+        this._lessons = lessons;
     }
 
     getRoomById(roomId) {
@@ -120,16 +120,16 @@ class Timetable {
             Math.floor(Math.random() * roomsArray.length)];
     }
 
-    getProfessorById(professorId) {
-        return this._professors.get(professorId);
+    getTeacherById(teacherId) {
+        return this._teachers.get(teacherId);
     }
 
-    getModuleById(moduleId) {
-        return this._modules.get(moduleId);
+    getSubjectById(subjectId) {
+        return this._subjects.get(subjectId);
     }
 
-    getGroupModulesById(groupId) {
-        return this._groups.get(groupId).getModules();
+    getGroupSubjectsById(groupId) {
+        return this._groups.get(groupId).getSubjects();
     }
 
     getGroupById(groupId) {
@@ -150,51 +150,51 @@ class Timetable {
             Math.floor(Math.random() * timeslotArray.length)];
     }
 
-    getClasses() {
-        return this._classes;
+    getLessons() {
+        return this._lessons;
     }
 
-    getNumClasses() {
-        if (this._numClasses > 0) {
-            return this._numClasses;
+    getNumLessons() {
+        if (this._numLessons > 0) {
+            return this._numLessons;
         }
 
-        let numClasses = 0;
+        let numLessons = 0;
         const groups = Array.from(this._groups.values());
         for (const group of groups) {
-            numClasses += group.getModuleIds().length;
+            numLessons += group.getSubjectIds().length;
         }
-        this._numClasses = numClasses;
+        this._numLessons = numLessons;
 
-        return this._numClasses;
+        return this._numLessons;
     }
 
     calcClashes() {
         let clashes = 0;
 
-        for (const classA of this._classes) {
+        for (const lessonA of this._lessons) {
             const roomCapacity =
-                this.getRoomById(classA.getRoomId()).getRoomCapacity();
+                this.getRoomById(lessonA.getRoomId()).getRoomCapacity();
             const groupSize =
-                this.getGroupById(classA.getGroupId()).getGroupSize();
+                this.getGroupById(lessonA.getGroupId()).getGroupSize();
 
             if (roomCapacity < groupSize) {
                 clashes++;
             }
 
-            for (const classB of this._classes) {
-                if (classA.getRoomId() === classB.getRoomId() &&
-                    classA.getTimeslotId() === classB.getTimeslotId() &&
-                    classA.getClassId() !== classB.getClassId()) {
+            for (const lessonB of this._lessons) {
+                if (lessonA.getRoomId() === lessonB.getRoomId() &&
+                    lessonA.getTimeslotId() === lessonB.getTimeslotId() &&
+                    lessonA.getLessonId() !== lessonB.getLessonId()) {
                     clashes++;
                     break;
                 }
             }
 
-            for (const classB of this._classes) {
-                if (classA.getProfessorId() === classB.getProfessorId() &&
-                    classA.getTimeslotId() === classB.getTimeslotId() &&
-                    classA.getClassId() !== classB.getClassId()) {
+            for (const lessonB of this._lessons) {
+                if (lessonA.getTeacherId() === lessonB.getTeacherId() &&
+                    lessonA.getTimeslotId() === lessonB.getTimeslotId() &&
+                    lessonA.getLessonId() !== lessonB.getLessonId()) {
                     clashes++;
                     break;
                 }
