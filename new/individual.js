@@ -32,7 +32,7 @@ class Individual {
                 newChromosome[chromosomeIndex] = roomId;
                 chromosomeIndex++;
 
-                const module = timetable.getModule(moduleId);
+                const module = timetable.getModuleById(moduleId);
                 newChromosome[chromosomeIndex] = module.getRandomProfessorId();
                 chromosomeIndex++;
             }

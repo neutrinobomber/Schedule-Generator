@@ -8,6 +8,10 @@ class Population {
         const firstArg = params[0];
         const secondArg = params[1];
 
+        if (params.length <= 1) {
+            return;
+        }
+
         if (typeof firstArg === 'number' &&
             typeof secondArg === 'object') {
             this._initByTimetable(firstArg, secondArg);
