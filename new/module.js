@@ -18,9 +18,9 @@ class Module {
         return this._module;
     }
 
-    getRandomProfessorID() {
-        const result = this.professorIds[
-                Math.floor(Math.random() * this.professorIds.length)];
+    getRandomProfessorId() {
+        const result = this._professorIds[
+                Math.floor(Math.random() * this._professorIds.length)];
         return result;
     }
 }

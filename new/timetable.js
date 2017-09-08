@@ -10,12 +10,15 @@ const Class = require('./class');
 
 class Timetable {
     constructor(cloneable) {
+        this._classes = [];
+        this._numClasses = 0;
+
         if (cloneable) {
             this._rooms = cloneable.getRooms();
             this._professors = cloneable.getProfessors();
             this._modules = cloneable.getModules();
-            this._groups = cloneable.getGroups;
-            this._timeslots = cloneable.getTomeslots();
+            this._groups = cloneable.getGroups();
+            this._timeslots = cloneable.getTimeslots();
         } else {
             this._rooms = new Map();
             this._professors = new Map();
@@ -23,9 +26,6 @@ class Timetable {
             this._groups = new Map();
             this._timeslots = new Map();
         }
-
-        this._classes = [];
-        this._numClasses = 0;
     }
 
     getGroups() {
@@ -149,7 +149,7 @@ class Timetable {
         return this._timeslots.get(timeslotId);
     }
 
-    getRandomTimeSlot() {
+    getRandomTimeslot() {
         const timeslotArray = Array.from(this._timeslots.values());
         const timeslot = timeslotArray[
             Math.floor(Math.random() * timeslotArray.length)];

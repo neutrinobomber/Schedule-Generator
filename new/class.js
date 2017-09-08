@@ -16,7 +16,7 @@ class Class {
         this._timeslotId = timeslotId;
     }
 
-    setRoomID(roomId) {
+    setRoomId(roomId) {
         this._roomId = roomId;
     }
 
