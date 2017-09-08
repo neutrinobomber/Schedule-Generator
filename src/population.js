@@ -28,8 +28,7 @@ class Population {
         for (let individCount = 0;
             individCount < populationSize;
             individCount++) {
-            const individ = new Individual(timetable);
-            this._population[individCount] = individ;
+            this._population[individCount] = new Individual(timetable);
         }
     }
 
@@ -37,8 +36,7 @@ class Population {
         for (let individCount = 0;
             individCount < populationSize;
             individCount++) {
-            const individ = new Individual(chromosomeLength);
-            this._population[individCount] = individ;
+            this._population[individCount] = new Individual(chromosomeLength);
         }
     }
 

@@ -20,16 +20,14 @@ class Individual {
 
         for (const group of timetable.getGroupsAsArray()) {
             for (const moduleId of group.getModuleIds()) {
-                const timeslotId = timetable
+                newChromosome[chromosomeIndex] = timetable
                     .getRandomTimeslot()
                     .getTimeslotId();
-                newChromosome[chromosomeIndex] = timeslotId;
                 chromosomeIndex++;
 
-                const roomId = timetable
+                newChromosome[chromosomeIndex] = timetable
                     .getRandomRoom()
                     .getRoomId();
-                newChromosome[chromosomeIndex] = roomId;
                 chromosomeIndex++;
 
                 const module = timetable.getModuleById(moduleId);
@@ -80,14 +78,14 @@ class Individual {
     toString() {
         let output = '';
         for (let gene = 0; gene < this._chromosome.length; gene++) {
-            output += this.chromosome[gene] + ',';
+            output += this._chromosome[gene] + ',';
         }
         return output;
     }
 
     containsGene(gene) {
         for (let i = 0; i < this._chromosome.length; i++) {
-            if (this.chromosome[i] === gene) {
+            if (this._chromosome[i] === gene) {
                 return true;
             }
         }
