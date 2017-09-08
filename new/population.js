@@ -21,7 +21,6 @@ class Population {
     }
 
     _initByTimetable(populationSize, timetable) {
-        this._population = [];
         for (let individCount = 0;
             individCount < populationSize;
             individCount++) {
@@ -31,7 +30,6 @@ class Population {
     }
 
     _initByChromosomeLength(populationSize, chromosomeLength) {
-        this._population = [];
         for (let individCount = 0;
             individCount < populationSize;
             individCount++) {
