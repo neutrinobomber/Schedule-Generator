@@ -25,10 +25,10 @@ class Individual {
                     .getTimeslotId();
                 chromosomeIndex++;
 
-                newChromosome[chromosomeIndex] = timetable
-                    .getRandomRoom()
-                    .getRoomId();
-                chromosomeIndex++;
+                // newChromosome[chromosomeIndex] = timetable
+                //     .getRandomRoom()
+                //     .getRoomId();
+                // chromosomeIndex++;
 
                 newChromosome[chromosomeIndex] = timetable
                     .getSubjectById(subjectId)

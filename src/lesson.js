@@ -5,7 +5,7 @@ class Lesson {
         this._subjectId = subjectId;
         this._teacherId = 0;
         this._timeslotId = 0;
-        this._roomId = 0;
+        // this._roomId = 0;
     }
 
     addTeacher(teacherId) {
@@ -16,9 +16,9 @@ class Lesson {
         this._timeslotId = timeslotId;
     }
 
-    setRoomId(roomId) {
-        this._roomId = roomId;
-    }
+    // setRoomId(roomId) {
+    //     this._roomId = roomId;
+    // }
 
     getLessonId() {
         return this._lessonId;
@@ -40,9 +40,9 @@ class Lesson {
         return this._timeslotId;
     }
 
-    getRoomId() {
-        return this._roomId;
-    }
+    // getRoomId() {
+    //     return this._roomId;
+    // }
 }
 
 module.exports = Lesson;

@@ -28,8 +28,8 @@ class TimetableGA {
         console.log();
         console.log('Solution found in ' + generation + ' generations');
         console.log('Final solution fitness: ' + population
-                                                    .getFittest(0)
-                                                    .getFitness());
+            .getFittest(0)
+            .getFitness());
         console.log('Clashes: ' + timetable.calcClashes());
 
         console.log();
@@ -39,24 +39,24 @@ class TimetableGA {
             console.log('Lesson ' + lessonIndex + ':');
             console.log('Subject: ' +
                 timetable
-                    .getSubjectById(bestLesson.getSubjectId())
-                    .getSubjectName());
+                .getSubjectById(bestLesson.getSubjectId())
+                .getSubjectName());
             console.log('Group: ' +
                 timetable
-                    .getGroupById(bestLesson.getGroupId())
-                    .getGroupId());
-            console.log('Room: ' +
-                timetable
-                    .getRoomById(bestLesson.getRoomId())
-                    .getRoomNumber());
+                .getGroupById(bestLesson.getGroupId())
+                .getGroupId());
+            // console.log('Room: ' +
+            //     timetable
+            //         .getRoomById(bestLesson.getRoomId())
+            //         .getRoomNumber());
             console.log('Teacher: ' +
                 timetable
-                    .getTeacherById(bestLesson.getTeacherId())
-                    .getTeacherName());
+                .getTeacherById(bestLesson.getTeacherId())
+                .getTeacherName());
             console.log('Time: ' +
                 timetable
-                    .getTimeslotById(bestLesson.getTimeslotId())
-                    .getTimeslot());
+                .getTimeslotById(bestLesson.getTimeslotId())
+                .getTimeslot());
             console.log('-----');
             lessonIndex++;
         }
@@ -65,10 +65,10 @@ class TimetableGA {
     static initializeTimetable() {
         const timetable = new Timetable();
 
-        timetable.addRoom(1, 'A1', 15);
-        timetable.addRoom(2, 'B1', 30);
-        timetable.addRoom(4, 'D1', 20);
-        timetable.addRoom(5, 'F1', 25);
+        // timetable.addRoom(1, 'A1', 15);
+        // timetable.addRoom(2, 'B1', 30);
+        // timetable.addRoom(4, 'D1', 20);
+        // timetable.addRoom(5, 'F1', 25);
 
         timetable.addTimeslot(1, 'Mon 9:00 - 11:00');
         timetable.addTimeslot(2, 'Mon 11:00 - 13:00');
@@ -98,16 +98,27 @@ class TimetableGA {
         timetable.addSubject(5, 'hi1', 'History', [4]);
         timetable.addSubject(6, 'dr1', 'Drama', [1, 4]);
 
-        timetable.addGroup(1, 10, [1, 3, 4]);
-        timetable.addGroup(2, 30, [2, 3, 5, 6]);
-        timetable.addGroup(3, 18, [3, 4, 5]);
-        timetable.addGroup(4, 25, [1, 4]);
-        timetable.addGroup(5, 20, [2, 3, 5]);
-        timetable.addGroup(6, 22, [1, 4, 5]);
-        timetable.addGroup(7, 16, [1, 3]);
-        timetable.addGroup(8, 18, [2, 6]);
-        timetable.addGroup(9, 24, [1, 6]);
-        timetable.addGroup(10, 25, [3, 4]);
+        // timetable.addGroup(1, 10, [1, 3, 4]);
+        // timetable.addGroup(2, 30, [2, 3, 5, 6]);
+        // timetable.addGroup(3, 18, [3, 4, 5]);
+        // timetable.addGroup(4, 25, [1, 4]);
+        // timetable.addGroup(5, 20, [2, 3, 5]);
+        // timetable.addGroup(6, 22, [1, 4, 5]);
+        // timetable.addGroup(7, 16, [1, 3]);
+        // timetable.addGroup(8, 18, [2, 6]);
+        // timetable.addGroup(9, 24, [1, 6]);
+        // timetable.addGroup(10, 25, [3, 4]);
+
+        timetable.addGroup(1, [1, 3, 4]);
+        timetable.addGroup(2, [2, 3, 5, 6]);
+        timetable.addGroup(3, [3, 4, 5]);
+        timetable.addGroup(4, [1, 4]);
+        timetable.addGroup(5, [2, 3, 5]);
+        timetable.addGroup(6, [1, 4, 5]);
+        timetable.addGroup(7, [1, 3]);
+        timetable.addGroup(8, [2, 6]);
+        timetable.addGroup(9, [1, 6]);
+        timetable.addGroup(10, [3, 4]);
 
         return timetable;
     }

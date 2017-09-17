@@ -1,7 +1,12 @@
 class Group {
-    constructor(groupId, groupSize, subjectIds) {
+    // constructor(groupId, groupSize, subjectIds) {
+    //     this._groupId = groupId;
+    //     this._groupSize = groupSize;
+    //     this._subjectIds = subjectIds;
+    // }
+
+    constructor(groupId, subjectIds) {
         this._groupId = groupId;
-        this._groupSize = groupSize;
         this._subjectIds = subjectIds;
     }
 
@@ -9,9 +14,9 @@ class Group {
         return this._groupId;
     }
 
-    getGroupSize() {
-        return this._groupSize;
-    }
+    // getGroupSize() {
+    //     return this._groupSize;
+    // }
 
     getSubjectIds() {
         return this._subjectIds;
